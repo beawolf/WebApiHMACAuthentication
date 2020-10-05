@@ -151,8 +151,9 @@ namespace HMACAuthentication.WebApi.Filters
 
             var serverTotalSeconds = Convert.ToUInt64(currentTs.TotalSeconds);
             var requestTotalSeconds = Convert.ToUInt64(requestTimeStamp);
+            ulong difference = serverTotalSeconds > requestTotalSeconds ? serverTotalSeconds - requestTotalSeconds : requestTotalSeconds - serverTotalSeconds;
 
-            if ((serverTotalSeconds - requestTotalSeconds) > requestMaxAgeInSeconds)
+            if (difference > requestMaxAgeInSeconds)
             {
                 return true;
             }
